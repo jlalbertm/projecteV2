@@ -6,24 +6,32 @@ namespace App\Http\Controllers;
 use App\Models\CicloFormativo;
 use Illuminate\Http\Request;
 
-
+/**
+ * Controlador per a la gestió completa del CRUD.
+ */
 class CicloFormativoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+  /**
+     * Mostra el llistat paginat (5 per pàgina) dels cicles.
      */
-    public function index()
+    public function index(Request $request)
     {
 
-
+        $buscar = $request->get('buscar');
+        $ciclosFormativos = CicloFormativo::when($buscar, function ($query, $buscar) {
+            return $query->where('nombre', 'LIKE', "%{$buscar}%")
+                         ->orWhere('familia_profesional', 'LIKE', "%{$buscar}%");
+        })->paginate(5);
+        return view('ciclosFormativos.index', compact('ciclosFormativos', 'buscar'));
+        /*
         $ciclosFormativos = CicloFormativo::orderBy('nombre')->paginate(5);
         return view('ciclosFormativos.index', compact('ciclosFormativos'));
-
+        */
 
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostra el formulari per crear un nou registre.
      */
     public function create()
     {
@@ -31,7 +39,7 @@ class CicloFormativoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda un nou registre a la base de dades del cicle formatiu.
      */
     public function store(Request $request)
     {
@@ -58,7 +66,7 @@ class CicloFormativoController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Mostra el cicle formatiu especificat.
      */
     public function show(CicloFormativo $ciclosFormativo)
     {
@@ -67,7 +75,7 @@ class CicloFormativoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostra el formulari per editar el cicle formatiu especificat.
      */
     public function edit(CicloFormativo $ciclosFormativo)
     {
@@ -78,8 +86,10 @@ class CicloFormativoController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Mostra el formulari per actualitzar el recurs especificat.
      */
+    
+     
     public function update(Request $request, CicloFormativo $ciclosFormativo)
     {
         $ciclosFormativo->nombre= $request->get('nombre');
@@ -93,7 +103,7 @@ class CicloFormativoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Borra el cicle formatiu especificat.
      */
     public function destroy(CicloFormativo $ciclosFormativo)
     {
