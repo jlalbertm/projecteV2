@@ -6,13 +6,13 @@
     <h3>Formulari de busqueda</h3>
     <form action="{{ route('ciclosFormativos.index') }}" method="GET" class="mb-4">
     <div class="input-group">
-        <input type="text" name="buscar" class="form-control" placeholder="Buscar por el nom o la familia profesional" value="{{ request('buscar') }}">
+        <input type="text" name="buscar" class="form-control" placeholder="Buscar per nom o família..." value="{{ request('buscar') }}">
         <button class="btn btn-primary" type="submit">Buscar</button>
         @if(request('buscar'))
-            <a href="{{ route('ciclosFormativos.index') }}" class="btn btn-secondary">Resetejar</a>
+            <a href="{{ route('ciclosFormativos.index') }}" class="btn btn-secondary">Netejar</a>
         @endif
     </div>
-</form>
+    </form>
     <ul>
         @forelse($ciclosFormativos as $CiclosFormativo)
             <li><a href="{{ route('ciclosFormativos.show',$CiclosFormativo)}}">{{$CiclosFormativo->nombre}}

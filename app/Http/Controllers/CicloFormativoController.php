@@ -41,6 +41,14 @@ class CicloFormativoController extends Controller
     /**
      * Guarda un nou registre a la base de dades del cicle formatiu.
      */
+    public function store(CicloFormativoRequest $request)
+    {
+        CicloFormativo::create($request->validated());
+
+        return redirect()->route('ciclosFormativos.index')
+            ->with('success', 'Cicle creat correctament.');
+    }
+    /*
     public function store(Request $request)
     {
         request()->validate(
@@ -63,7 +71,7 @@ class CicloFormativoController extends Controller
         $ciclosFormativo->activo= $request->get('activo');
         $ciclosFormativo->save();
         return redirect()->route('ciclosFormativos.index');
-    }
+    }*/
 
     /**
      * Mostra el cicle formatiu especificat.
@@ -88,8 +96,15 @@ class CicloFormativoController extends Controller
     /**
      * Mostra el formulari per actualitzar el recurs especificat.
      */
-    
-     
+    public function update(CicloFormativoRequest $request, CicloFormativo $cicloFormativo)
+    {
+        $cicloFormativo->update($request->validated());
+
+        return redirect()->route('ciclosFormativos.index')
+            ->with('success', 'Cicle actualitzat correctament.');
+    }
+
+    /* 
     public function update(Request $request, CicloFormativo $ciclosFormativo)
     {
         $ciclosFormativo->nombre= $request->get('nombre');
@@ -100,7 +115,7 @@ class CicloFormativoController extends Controller
         $ciclosFormativo->activo= $request->get('activo');
         $ciclosFormativo->save();
         return redirect()->route('ciclosFormativos.index');
-    }
+    }*/
 
     /**
      * Borra el cicle formatiu especificat.
