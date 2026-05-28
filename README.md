@@ -4,8 +4,8 @@
 <a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
 
 </p>
-##Projecte intermodular 2 de Desenvolupament d'aplicacions WEB
 
+## Projecte intermodular 2 de Desenvolupament d'aplicacions WEB
 
 Projecte intermodular per a l'automatització i gestió de les programacions didàctiques del centre. Aquesta entrega conté la documentació i codi corresponents al **Mòdul B: CRUD de Cicles Formatius**.
 
