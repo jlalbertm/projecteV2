@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CicloFormativo;
 use Illuminate\Http\Request;
+use App\Http\Requests\CicloFormativoRequest;
 
 /**
  * Controlador per a la gestió completa del CRUD.
@@ -74,35 +75,54 @@ class CicloFormativoController extends Controller
     }*/
 
     /**
-     * Mostra el cicle formatiu especificat.
+     * Muestra la información detallada de un ciclo formativo buscando por su ID de forma explícita.
      */
-    public function show(CicloFormativo $ciclosFormativo)
+    public function show($id)
     {
-        $CiclosFormativo = $ciclosFormativo;
-        return view('ciclosFormativos.show', compact('CiclosFormativo'));
+       
+        $cicloFormativo = CicloFormativo::findOrFail($id);
+
+      
+        return view('ciclosFormativos.show', compact('cicloFormativo'));
     }
 
     /**
      * Mostra el formulari per editar el cicle formatiu especificat.
      */
-    public function edit(CicloFormativo $ciclosFormativo)
-    {
-   
-        $CiclosFormativo = $ciclosFormativo;
-        return view('ciclosFormativos.edit', compact('CiclosFormativo'));
+    public function edit($id)
+{
+    
+    $cicloFormativo = CicloFormativo::findOrFail($id);
 
-    }
+    
+    return view('ciclosFormativos.edit', compact('cicloFormativo'));
+}
+    /*
+    public function edit(CicloFormativo $cicloFormativo)
+    {
+       
+        return view('ciclosFormativos.edit', compact('cicloFormativo'));
+    }*/
+
 
     /**
      * Mostra el formulari per actualitzar el recurs especificat.
      */
     public function update(CicloFormativoRequest $request, CicloFormativo $cicloFormativo)
-    {
-        $cicloFormativo->update($request->validated());
+{
+    // dades del formulari
+    $data = $request->validated();
 
-        return redirect()->route('ciclosFormativos.index')
-            ->with('success', 'Cicle actualitzat correctament.');
-    }
+    // Si el checkbox de "activo" no ve al formulario, el forzem a 0 (false)
+    // Si ve marcat, enms asegurem de guardarlo com 1 (true)
+    $data['activo'] = $request->has('activo') ? 1 : 0;
+
+    // Actualiza
+    $cicloFormativo->update($data);
+
+    return redirect()->route('ciclosFormativos.index')
+        ->with('success', 'Cicle actualitzat correctament.');
+}
 
     /* 
     public function update(Request $request, CicloFormativo $ciclosFormativo)

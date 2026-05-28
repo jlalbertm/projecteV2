@@ -7,3 +7,4 @@ use App\Http\Controllers\CicloFormativoController;
 Route::get('/', [CicloFormativoController::class, 'index']);
 //creem les rutes per a les operacions CRUD dels cicles formatius
 Route::resource('ciclosFormativos', CicloFormativoController::class);
+
